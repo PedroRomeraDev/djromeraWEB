@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>DJ Romera Live</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#111;
+      height:100vh;
+      overflow:hidden;
+      color:white;
+    }
+
+    /* Fondo opcional */
+    .background{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at top, #2a0000 0%, #111 60%);
+    }
+
+    /* Barra inferior */
+    .player-bar{
+      position:fixed;
+      bottom:0;
+      left:0;
+      width:100%;
+      height:90px;
+
+      background:#000;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      padding:0 25px;
+
+      border-top:2px solid #1a1a1a;
+
+      box-shadow:0 -5px 20px rgba(0,0,0,0.5);
+    }
+
+    /* Parte izquierda */
+    .left-section{
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+
+    /* Botón play */
+    .play-btn{
+      width:58px;
+      height:58px;
+
+      border:none;
+      border-radius:50%;
+
+      background:#d60000;
+
+      cursor:pointer;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      transition:0.2s;
+    }
+
+    .play-btn:hover{
+      transform:scale(1.08);
+      background:#ff0000;
+    }
+
+    /* Triángulo play */
+    .play-icon{
+      width:0;
+      height:0;
+
+      border-top:11px solid transparent;
+      border-bottom:11px solid transparent;
+      border-left:18px solid white;
+
+      margin-left:4px;
+    }
+
+    /* Icono pausa */
+    .pause-icon{
+      position:relative;
+      width:18px;
+      height:20px;
+    }
+
+    .pause-icon::before,
+    .pause-icon::after{
+      content:"";
+      position:absolute;
+      top:0;
+      width:6px;
+      height:20px;
+      background:white;
+      border-radius:2px;
+    }
+
+    .pause-icon::before{
+      left:0;
+    }
+
+    .pause-icon::after{
+      right:0;
+    }
+
+    /* Texto */
+    .radio-info h1{
+      font-size:22px;
+      margin-bottom:4px;
+    }
+
+    .radio-info p{
+      color:#aaa;
+      font-size:14px;
+    }
+
+    /* GIF audio */
+    .audio-gif{
+      height:55px;
+      user-select:none;
+      pointer-events:none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="background"></div>
+
+  <!-- Reproductor -->
+  <div class="player-bar">
+
+    <div class="left-section">
+
+      <button class="play-btn" id="playButton">
+        <div class="play-icon" id="icon"></div>
+      </button>
+
+      <div class="radio-info">
+        <h1>DJ Romera Live</h1>
+        <p>En directo</p>
+      </div>
+
+    </div>
+
+    <img
+      src="https://djromera.vercel.app/res/gif/audio.gif"
+      class="audio-gif"
+      alt="Audio Visualizer"
+    >
+
+  </div>
+
+  <!-- Audio -->
+  <audio id="radio">
+    <source
+      src="https://sapircast.caster.fm:19379/YDcE2?token=42d9eb4cf6392286c5958616f7b26e1f"
+      type="audio/mpeg"
+    >
+  </audio>
+
+  <script>
+
+    const radio = document.getElementById("radio");
+    const button = document.getElementById("playButton");
+    const icon = document.getElementById("icon");
+
+    let playing = false;
+
+    button.addEventListener("click", async () => {
+
+      if(!playing){
+
+        try{
+          await radio.play();
+
+          icon.classList.remove("play-icon");
+          icon.classList.add("pause-icon");
+
+          playing = true;
+
+        }catch(err){
+          console.log(err);
+        }
+
+      }else{
+
+        radio.pause();
+
+        icon.classList.remove("pause-icon");
+        icon.classList.add("play-icon");
+
+        playing = false;
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
