@@ -21,7 +21,6 @@ body{
     height:100vh;
 }
 
-/* Fondo */
 
 .background{
     position:fixed;
@@ -31,141 +30,6 @@ body{
     radial-gradient(circle at top,#3a0000 0%,#111 60%);
 }
 
-/* Barra */
-
-.player{
-    position:fixed;
-
-    bottom:0;
-    left:0;
-
-    width:100%;
-    height:95px;
-
-    background:#000;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:0 25px;
-
-    border-top:2px solid #1a1a1a;
-
-    z-index:999;
-}
-
-/* Zona izquierda */
-
-.left{
-    display:flex;
-    align-items:center;
-    gap:18px;
-}
-
-/* Botón */
-
-.playButton{
-
-    width:60px;
-    height:60px;
-
-    border:none;
-    border-radius:50%;
-
-    background:#d60000;
-
-    cursor:pointer;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    transition:0.2s;
-}
-
-.playButton:hover{
-    transform:scale(1.08);
-    background:#ff0000;
-}
-
-/* Icono play */
-
-.playIcon{
-    width:0;
-    height:0;
-
-    border-top:12px solid transparent;
-    border-bottom:12px solid transparent;
-    border-left:18px solid white;
-
-    margin-left:4px;
-}
-
-/* Icono pausa */
-
-.pauseIcon{
-    position:relative;
-    width:18px;
-    height:22px;
-}
-
-.pauseIcon::before,
-.pauseIcon::after{
-    content:"";
-    position:absolute;
-    top:0;
-
-    width:6px;
-    height:22px;
-
-    background:white;
-    border-radius:2px;
-}
-
-.pauseIcon::before{
-    left:0;
-}
-
-.pauseIcon::after{
-    right:0;
-}
-
-/* Texto */
-
-.info h1{
-    color:white;
-    font-size:22px;
-    margin-bottom:4px;
-}
-
-.info p{
-    color:#aaa;
-    font-size:14px;
-}
-
-/* GIF */
-
-.audioGif{
-    height:55px;
-    user-select:none;
-    pointer-events:none;
-}
-
-/* Widget oculto */
-
-.hiddenWidget{
-    position:absolute;
-
-    width:1px;
-    height:1px;
-
-    opacity:0;
-
-    overflow:hidden;
-
-    pointer-events:none;
-}
 
 </style>
 </head>
@@ -181,7 +45,7 @@ body{
     data-theme="dark"
     data-color="e81e4d"
     data-channelId="a1cbb5c0-ac24-400a-bc51-85cbd68a96ac"
-    class="cstrEmbed hiddenWidget">
+    class="cstrEmbed">
 
     <a href="https://www.caster.fm">Shoutcast Hosting</a>
     <a href="https://www.caster.fm">Stream Hosting</a>
@@ -189,105 +53,7 @@ body{
 
 </div>
 
-<!-- Reproductor -->
-
-<div class="player">
-
-    <div class="left">
-
-        <button class="playButton" id="playButton">
-
-            <div class="playIcon" id="icon"></div>
-
-        </button>
-
-        <div class="info">
-
-            <h1>DJ Romera Live</h1>
-            <p>En directo</p>
-
-        </div>
-
-    </div>
-
-    <img
-        src="https://djromera.vercel.app/res/gif/audio.gif"
-        class="audioGif"
-        alt="audio gif"
-    >
-
-</div>
-
-<!-- Script CasterFM -->
-
 <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
-
-<!-- Control -->
-
-<script>
-
-const playButton = document.getElementById("playButton");
-const icon = document.getElementById("icon");
-
-let playing = false;
-
-/* Esperar a que cargue el iframe */
-
-function getAudioElement(){
-
-    const iframe = document.querySelector("iframe");
-
-    if(!iframe) return null;
-
-    try{
-
-        const iframeDocument =
-            iframe.contentDocument ||
-            iframe.contentWindow.document;
-
-        const audio =
-            iframeDocument.querySelector("audio");
-
-        return audio;
-
-    }catch(err){
-
-        return null;
-    }
-}
-
-playButton.addEventListener("click", () => {
-
-    const audio = getAudioElement();
-
-    if(!audio){
-
-        console.log("Audio no encontrado todavía");
-        return;
-    }
-
-    if(!playing){
-
-        audio.play();
-
-        icon.classList.remove("playIcon");
-        icon.classList.add("pauseIcon");
-
-        playing = true;
-
-    }else{
-
-        audio.pause();
-
-        icon.classList.remove("pauseIcon");
-        icon.classList.add("playIcon");
-
-        playing = false;
-    }
-
-});
-
-</script>
 
 </body>
 </html>
