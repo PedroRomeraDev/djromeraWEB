@@ -1,33 +1,31 @@
-const radio = document.getElementById("radio");
-    const button = document.getElementById("playButton");
-    const icon = document.getElementById("icon");
+const button = document.getElementById("playButton");
+const icon = document.getElementById("icon");
 
-    let playing = false;
+let playing = false;
 
-    button.addEventListener("click", async () => {
+button.addEventListener("click", () => {
 
-      if(!playing){
+    const audio = document.querySelector("audio");
 
-        try{
-          await radio.play();
-          
-          icon.classList.remove("play-icon");
-          icon.classList.add("pause-icon");
+    if(!audio) return;
 
-          playing = true;
+    if(!playing){
 
-        }catch(err){
-          console.log(err);
-        }
+        audio.play();
 
-      }else{
+        icon.classList.remove("play-icon");
+        icon.classList.add("pause-icon");
 
-        radio.pause();
+        playing = true;
+
+    }else{
+
+        audio.pause();
 
         icon.classList.remove("pause-icon");
         icon.classList.add("play-icon");
 
         playing = false;
-      }
+    }
 
-    });
+});
