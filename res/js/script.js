@@ -10,7 +10,7 @@ const radio = document.getElementById("radio");
 
         try{
           await radio.play();
-
+          
           icon.classList.remove("play-icon");
           icon.classList.add("pause-icon");
 
